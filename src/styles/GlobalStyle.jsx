@@ -47,7 +47,7 @@ const GlobalStyle = createGlobalStyle`
         position: absolute;
     }
     :root {
-        --primary: #676f9d;
+        --primary: #007be9;
 
     }
 `;
