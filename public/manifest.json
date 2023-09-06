@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "검색어 추천",
+  "name": "검색어 추천 기능...",
   "icons": [
     {
       "src": "favicon.ico",
