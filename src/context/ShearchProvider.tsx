@@ -59,7 +59,6 @@ function SearchProvider({ children }: SearchProviderProps) {
   };
 
   const handleSuggestionClick = (sick: Sick) => {
-    console.info('sick', sick);
     setSearchText(sick.sickNm);
     setSuggestions(prev => prev.filter(prev => prev.sickNm === sick.sickNm));
     setSelectedIndex(-1);
