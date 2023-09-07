@@ -1,6 +1,6 @@
 // SearchProvider.tsx
 import { getData } from '../api';
-import { isEmpty } from '../lib/utils';
+import { isEmpty, is단모음단자음 } from '../lib/utils';
 import { Sick } from '../types';
 import SearchContext, { SearchContextType } from './ShearchContext';
 import React, { useCallback, useState } from 'react';
@@ -39,7 +39,10 @@ function SearchProvider({ children }: SearchProviderProps) {
   const inputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
     setSearchText(query);
+
+    if (is단모음단자음(query)) return;
     checkedExpireTime();
+
     if (!query) {
       setSuggestions([]);
       return;
