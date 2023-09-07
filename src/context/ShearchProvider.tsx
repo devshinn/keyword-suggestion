@@ -3,7 +3,7 @@ import { getData } from '../api';
 import { isEmpty, is단모음단자음 } from '../lib/utils';
 import { Sick } from '../types';
 import SearchContext, { SearchContextType } from './ShearchContext';
-import React, { useCallback, useState } from 'react';
+import React, { KeyboardEvent, useCallback, useState } from 'react';
 
 interface SearchProviderProps {
   children: React.ReactNode;
@@ -41,12 +41,14 @@ function SearchProvider({ children }: SearchProviderProps) {
     setSearchText(query);
 
     if (is단모음단자음(query)) return;
-    checkedExpireTime();
 
     if (!query) {
       setSuggestions([]);
       return;
     }
+
+    checkedExpireTime();
+
     if (cachedResults[query]) {
       setSuggestions(cachedResults[query].data);
       console.info('in cach data');
@@ -56,10 +58,10 @@ function SearchProvider({ children }: SearchProviderProps) {
     }
   };
 
-  const handleSuggestionClick = (suggestion: string) => {
-    setSearchText(suggestion);
-    selectionIndex !== -1 &&
-      setSuggestions(prev => prev.filter(sick => sick.sickNm === suggestion));
+  const handleSuggestionClick = (sick: Sick) => {
+    console.info('sick', sick);
+    setSearchText(sick.sickNm);
+    setSuggestions(prev => prev.filter(prev => prev.sickNm === sick.sickNm));
     setSelectedIndex(-1);
     changeFocus(false);
   };
@@ -80,21 +82,21 @@ function SearchProvider({ children }: SearchProviderProps) {
   };
 
   const keyboardEvent = useCallback(
-    (e: any) => {
+    (e: KeyboardEvent<HTMLInputElement>) => {
       if (isEmpty(suggestions)) return;
       if (e.key === 'ArrowDown') {
         e.preventDefault();
         setSelectedIndex(prevIndex => {
-          setSearchText(
-            suggestions[prevIndex < suggestions.length - 1 ? prevIndex + 1 : prevIndex].sickNm,
-          );
-          return prevIndex < suggestions.length - 1 ? prevIndex + 1 : prevIndex;
+          const idx = prevIndex < suggestions.length - 1 ? prevIndex + 1 : prevIndex;
+          setSearchText(suggestions[idx].sickNm);
+          return idx;
         });
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
         setSelectedIndex(prevIndex => {
-          setSearchText(suggestions[prevIndex > 0 ? prevIndex - 1 : prevIndex].sickNm);
-          return prevIndex > 0 ? prevIndex - 1 : prevIndex;
+          const idx = prevIndex > 0 ? prevIndex - 1 : prevIndex;
+          setSearchText(suggestions[idx].sickNm);
+          return idx;
         });
       } else if (e.key === 'Enter') {
         selectionIndex !== -1 && setSuggestions(prev => [prev[selectionIndex]]);

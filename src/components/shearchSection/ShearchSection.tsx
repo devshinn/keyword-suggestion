@@ -22,11 +22,14 @@ function ShearchSection() {
           placeholder={'질환명을 입력해 주세요.'}
           value={searchText}
           onChange={inputChange}
-          onFocus={() => changeFocus(true)}
+          onFocus={e => {
+            e.preventDefault();
+            changeFocus(true);
+          }}
           onBlur={() => {
             setTimeout(() => {
               changeFocus(false);
-            }, 100);
+            }, 200);
           }}
           onKeyDown={keyboardEvent}
         />
@@ -53,6 +56,7 @@ const Div = styled.div`
     width: 100%;
   }
   .shearch-wrap {
+    max-width: 490px;
     display: flex;
     justify-content: center;
     position: relative;

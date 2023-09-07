@@ -8,7 +8,7 @@ export interface SearchContextType {
   searchText: string;
   suggestions: Sick[];
   inputChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  handleSuggestionClick: (suggestion: string) => void;
+  handleSuggestionClick: (sick: Sick) => void;
 }
 
 const SearchContext = createContext<SearchContextType | undefined>(undefined);

@@ -21,10 +21,7 @@ function Suggestions() {
             {suggestions.map(sick => (
               <li
                 key={sick.sickCd}
-                onClick={() => {
-                  console.info('clicked');
-                  handleSuggestionClick(sick.sickNm);
-                }}
+                onClick={() => handleSuggestionClick(sick)}
                 className={sick.sickNm === searchText ? 'selected' : ''}
               >
                 <i>
@@ -48,12 +45,9 @@ const Div = styled.div`
   min-height: 100px;
   position: absolute;
   top: 100px;
-
   background-color: white;
   border-radius: 1rem;
   width: 100%;
-
-  max-width: 490px;
   overflow: auto;
   box-shadow:
     0 10px 20px rgba(0, 0, 0, 0.19),
