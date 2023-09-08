@@ -25,7 +25,7 @@ function SearchProvider({ children }: SearchProviderProps) {
     const now = new Date().getTime();
     const expireTime = new Date(now + EXP).getTime();
     try {
-      const data = await getData(query);
+      const data = (await getData(query)).slice(0, 10);
       setSuggestions(data);
       setCachedResults({
         ...cachedResults,
